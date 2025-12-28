@@ -15,6 +15,16 @@ def contact(request):
 def services(request):
     return render(request, "services.html")
 
+def sample(request):
+    print(request)
+    qp1=request.GET.get("name")
+    qp2=request.GET.get("city")
+    return HttpResponse(f"{qp1} is from {qp2}")
+
+def sample1(request):
+    info={"data":[{"name":"akanksha","city":"hyd","gender":"female"},{"name":"uma","city":"bnglr","gender":"female"},{"name":"durgaprasad","city":"vij","gender":"male"}]}
+    return JsonResponse(info)
+
 # def response(request):
 #     info = {"Data" : [{"Name" : "Meghendra", "Age" : 22, "Gender" : "Male"}, 
 #                       {"Name" :"Nickel", "Age" : 21, "Gender" : "Male"}, 
