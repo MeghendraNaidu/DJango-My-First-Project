@@ -15,6 +15,9 @@ def contact(request):
 def services(request):
     return render(request, "services.html")
 
+# 09-12-2025 on this date we discuss about the deployment to git and render
+
+# 10-12-2025
 def sample(request):
     print(request)
     qp1=request.GET.get("name")
@@ -22,35 +25,45 @@ def sample(request):
     return HttpResponse(f"{qp1} is from {qp2}")
 
 def sample1(request):
-    info={"data":[{"name":"akanksha","city":"hyd","gender":"female"},{"name":"uma","city":"bnglr","gender":"female"},{"name":"durgaprasad","city":"vij","gender":"male"}]}
+    info={"data":[{"name":"akanksha","city":"hyd","gender":"female"},
+                  {"name":"uma","city":"bnglr","gender":"female"},
+                  {"name":"durgaprasad","city":"vij","gender":"male"}]}
     return JsonResponse(info)
 
-# def response(request):
-#     info = {"Data" : [{"Name" : "Meghendra", "Age" : 22, "Gender" : "Male"}, 
-#                       {"Name" :"Nickel", "Age" : 21, "Gender" : "Male"}, 
-#                       {"Name" : "NagaRaju", "Age" : 23, "Gender" : "Male"}]}
-#     return JsonResponse(info)
+# 11-12-2025
+#dynamic response using query params
+def productInfo(request):
+    product_name=request.GET.get("product",'mobile')
+    quantity=int(request.GET.get("quantity",1))
+    price=int(request.GET.get("price",25000))
+    data={"product":product_name,"quantity":quantity,"price":price,"totalprice":price*quantity}
+    return JsonResponse(data)
 
-# # Dynamic response using query params
-# def product_info(request):
-#     product_name = request.GET.get("product", "mobile")
-#     quantity = int(request.GET.get("quantity", 1))
-#     price = int(request.GET.get("price", 25000))
-    
-#     data = {"product" : product_name, "Quantity" : quantity, "Price" : price, "Total_Sales" : price * quantity}
-#     return JsonResponse(data)
+#filtering using query params
+def filteringData(request):
+    data=[1,2,3,4,5,6,7,8,9,10]
+    filteredData=[]
+    qp=int(request.GET.get("num",2))
+    for x in data:
+        if x%qp==0:
+            filteredData.append(x)
+    return JsonResponse({"data":filteredData})
 
-# # filtering using query params
-# def filteringData(request):
-#     data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-#     filterData = []
-    
-#     qp = int(request.GET.get("num", 2))
-    
-#     for i in data:
-#         if i % qp == 0:
-#             filterData.append(i)
-#     return JsonResponse({"data" : filterData})
+students_data=[{'name':'durgaprasad','city':'hyd'},
+               {'name':'rajendra','city':'hyd'},
+               {'name':'uma','city':'bnglr'},
+               {'name':'kiran','city':'bnglr'}]
+
+def filterStudentsByCity(request):
+    filteredStudents=[]
+    city=request.GET.get("city","hyd")
+
+    for student in students_data:
+        if student["city"]==city:
+            filteredStudents.append(student)
+    return JsonResponse({"status":"success","data":filteredStudents})
+
+# response={"status":"success","pagenum":2,"limit":4,"total_pages":4,"data":[{},{},{}]}
 
 # def stu_info(request):
 #     info = {"Data" : [{"Name" : "Meghendra", "Age" : 22, "Gender" : "Male", "City": "Hyd"}, 
