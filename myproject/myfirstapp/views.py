@@ -65,6 +65,21 @@ def filterStudentsByCity(request):
 
 # response={"status":"success","pagenum":2,"limit":4,"total_pages":4,"data":[{},{},{}]}
 
+# 13-12-2025
+def pagination(request):
+    data=['apple','banana','carrot','grapes','watermelon','kiwi','pineapple','custard-apple','strawberry','blueberry','dragonfruit']
+    page=int(request.GET.get("page",1))
+    limit=int(request.GET.get("limit",3))
+
+    start=(page-1)*limit
+    end=page*limit
+    total_pages=math.ceil(len(data)/limit)
+    result=data[start:end]
+
+    res={"status":"success","current_page":page,"total_pages":total_pages,"data":result}
+    return JsonResponse(res,status=302)
+
+
 # def stu_info(request):
 #     info = {"Data" : [{"Name" : "Meghendra", "Age" : 22, "Gender" : "Male", "City": "Hyd"}, 
 #                     {"Name" :"Nickel", "Age" : 21, "Gender" : "Male", "City": "Ban"}, 
