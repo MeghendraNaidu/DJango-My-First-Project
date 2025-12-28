@@ -79,6 +79,9 @@ def pagination(request):
     res={"status":"success","current_page":page,"total_pages":total_pages,"data":result}
     return JsonResponse(res,status=302)
 
+# python manage.py shell -c "from django.db import connection; c=connection.cursor(); c.execute('SELECT DATABASE(), VERSION()'); print(c.fetchone())"
+# This command is used check if the db connection is done or not
+
 
 # def stu_info(request):
 #     info = {"Data" : [{"Name" : "Meghendra", "Age" : 22, "Gender" : "Male", "City": "Hyd"}, 
