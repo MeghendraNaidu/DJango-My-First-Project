@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 import math
+import json
 from django.views.decorators.csrf import csrf_exempt
+from myfirstapp.models import userProfile,Employee
+from django.db.utils import IntegrityError, Product
 
 
 # Create your views here.
@@ -82,32 +85,54 @@ def pagination(request):
 # python manage.py shell -c "from django.db import connection; c=connection.cursor(); c.execute('SELECT DATABASE(), VERSION()'); print(c.fetchone())"
 # This command is used check if the db connection is done or not
 
+# 17-12-2025
+# Here POST method is used without database
+@csrf_exempt
+def createData(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        print(data)
+    return JsonResponse({"status":"success","data":data,"statuscode":201})
 
-# def stu_info(request):
-#     info = {"Data" : [{"Name" : "Meghendra", "Age" : 22, "Gender" : "Male", "City": "Hyd"}, 
-#                     {"Name" :"Nickel", "Age" : 21, "Gender" : "Male", "City": "Ban"}, 
-#                     {"Name" : "NagaRaju", "Age" : 23, "Gender" : "Male", "City" : "Hyd"},
-#                     {"Name" : "Ramanji", "Age" : 22, "Gender" : "Male", "City" : "Ban"}]}
-#     filterData = []
-#     city = request.GET.get("city", "Hyd")
+@csrf_exempt
+def createProduct(request):
+    if request.method=="POST":
+        data=json.loads(request.body)
+        print(data)
+    return JsonResponse({"status":"success","data":data,"statuscode":201})
+
+# Here POST method is used with database
+@csrf_exempt
+def createDataToDB(request):
+    try:
+        if request.method=="POST":
+            data=json.loads(request.body) #dictionary
+            name=data.get("name") #taking name property from dict
+            age=data.get("age") #taking age property from dict
+            city=data.get("city") #taking city property from dict
+            userProfile.objects.create(name=name,age=age,city=city)
+            print(data)
+        return JsonResponse({"status":"success","data":data,"statuscode":201},status=201)
     
-#     for i in info:
-#         if i["City"] == city:
-#             filterData.append(i)
-#     return JsonResponse(filterData)
+    except Exception as e:
+        return JsonResponse({"statuscode":500,"message":"internal server error"})
+    
+@csrf_exempt
+def createEmployee(request):
+    try:
+        if request.method=="POST":
+            data=json.loads(request.body)
+            print(data)
+            Employee.objects.create(emp_name=data.get("name"),emp_salary=data.get("sal"),emp_email=data.get("email"))
+        return JsonResponse({"status":"success","data":data,"statuscode":201},status=201)
+    except IntegrityError as e:        
+        return JsonResponse({"status":"error","message":"inputs are invalid or not acceptable"},status=400)
+    finally:
+        print("done")
+        
+# Todays Task is
+# create product model with fields produ_name,price and quantity,totalprice
 
-# def pagination(request):
-#     data=['apple','banana','carrot','grapes','watermelon','kiwi','pineapple','custard-apple','strawberry','blueberry','dragonfruit']
-#     page=int(request.GET.get("page",1))
-#     limit=int(request.GET.get("limit",3))
-
-#     start=(page-1)*limit
-#     end=page*limit
-#     total_pages=math.ceil(len(data)/limit)
-#     result=data[start:end]
-
-#     res={"status":"success","current_page":page,"total_pages":total_pages,"data":result}
-#     return JsonResponse(res,status=302)
 
 # student_info = [{"id":"1", "Name":"Meghendra", "Degree":"CSE"}]
 
