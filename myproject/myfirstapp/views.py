@@ -4,7 +4,7 @@ import math
 import json
 from django.views.decorators.csrf import csrf_exempt
 from myfirstapp.models import userProfile,Employee
-from django.db.utils import IntegrityError, Product
+from django.db.utils import IntegrityError
 
 
 # Create your views here.
@@ -141,3 +141,14 @@ def createEmployee(request):
 
 
 # 27-12-2025
+
+# 30-12-2025
+@csrf_exempt
+def UpdateUserCityById(request):
+    try:
+        if request.method == "PUT":
+            return JsonResponse({"status" : "Success", "msg" : "Record found Successfully"}, status = 200)
+        return JsonResponse({"status" : "Failure", "msg" : "Only PUT method is Allowed"}, status = 400)
+        
+    except Exception as e:
+        return JsonResponse({"status" : "Error", "msg" : "Something Went Wrong"}, status = 500)

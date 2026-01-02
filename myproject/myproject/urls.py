@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from myfirstapp.views import createEmployee, createDataToDB, createProduct, createData, pagination, filterStudentsByCity, filteringData, productInfo, sample1, sample, home, about, contact, services
 
+from mysecondapp.views import MethodsOnBookDetails, DeleteBookDetails, UpdateBookDetails, GetBooksDetails, AddBookDetails, UpdateScreenByScreen, BookingDetails, BookMyshow
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("home/", home, name = "home"),
@@ -34,4 +36,12 @@ urlpatterns = [
     path('productcreate/',createProduct),
     path('createuser/', createDataToDB),
     path('emp/',createEmployee),
+    path('bookticket/',BookMyshow),
+    path('getBookings/',BookingDetails),
+    path('updatescreen/<str:ref_screen>',UpdateScreenByScreen),
+    path('addbookdetails/', AddBookDetails),
+    path('getbooks/', GetBooksDetails),
+    path('updatebook/<str:ref_id>', UpdateBookDetails),
+    path('deletebook/<str:ref_id>', DeleteBookDetails), 
+    path('methodsonbook/', MethodsOnBookDetails)
 ]
