@@ -143,12 +143,51 @@ def createEmployee(request):
 # 27-12-2025
 
 # 30-12-2025
-@csrf_exempt
+@csrf_exempt       
 def UpdateUserCityById(request):
     try:
-        if request.method == "PUT":
-            return JsonResponse({"status" : "Success", "msg" : "Record found Successfully"}, status = 200)
-        return JsonResponse({"status" : "Failure", "msg" : "Only PUT method is Allowed"}, status = 400)
-        
+        if request.method=="PUT":
+            input_data=json.loads(request.body)
+            ref_id=input_data["id"]
+            new_city=input_data["new_city"]
+            update=userProfile.objects.filter(id=ref_id).update(city=new_city)
+            if update==0:
+                msg="no record found"
+            else:
+                msg="record updated"
+            print(update)
+            return JsonResponse({"status":"success","msg":msg},status=200)
+        return JsonResponse({"status":"failure",":msg":"only put method is allowed"},status=400)
     except Exception as e:
-        return JsonResponse({"status" : "Error", "msg" : "Something Went Wrong"}, status = 500)
+         return JsonResponse({"status":"error","message":"something went wrong"},status=500)
+
+@csrf_exempt
+def updateUseragebyId(request):
+    try:
+        if request.method=="PUT":
+            input_data=json.loads(request.body)
+            ref_id=input_data["id"]
+            new_age=input_data["new_age"]
+            update=userProfile.objects.filter(id=ref_id).update(age=new_age)
+            if update==0:
+                msg="no record found with referrence of id"
+            else:
+                msg="record is updated successfully"
+            return JsonResponse({"status":"success","msg":msg},status=200)
+        return JsonResponse({"status":"failure",":msg":"only put method is allowed"},status=400)
+    except Exception as e:
+        return JsonResponse({"status":"error","message":"something went wrong"},status=500)
+@csrf_exempt
+def DeleteUserById(request,ref_id):
+    try:
+        if request.method=="DELETE": 
+            delete=userProfile.objects.filter(id=ref_id).delete() 
+            print(delete[0])  
+            if delete[0]==0:
+                msg="no record is found to delete"
+            else:
+                msg="record is deleted successfully"        
+            return JsonResponse({"status":"success","msg":msg},status=200)
+        return JsonResponse({"status":"failure",":msg":"only DELETE method is allowed"},status=400)
+    except Exception as e:
+        return JsonResponse({"status":"error","message":"something went wrong"},status=500)

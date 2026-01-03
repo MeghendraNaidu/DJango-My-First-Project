@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from myfirstapp.views import createEmployee, createDataToDB, createProduct, createData, pagination, filterStudentsByCity, filteringData, productInfo, sample1, sample, home, about, contact, services
+from myfirstapp.views import DeleteUserById, updateUseragebyId, UpdateUserCityById, createEmployee, createDataToDB, createProduct, createData, pagination, filterStudentsByCity, filteringData, productInfo, sample1, sample, home, about, contact, services
 
-from mysecondapp.views import MethodsOnBookDetails, DeleteBookDetails, UpdateBookDetails, GetBooksDetails, AddBookDetails, UpdateScreenByScreen, BookingDetails, BookMyshow
+from mysecondapp.views import MethodsOnBookDetails, DeleteBookDetails, UpdateBookDetails, GetBooksDetails, AddBookDetails, UpdateScreenByScreen, BookingDetails, BookMyshow, orderPlacing
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +36,7 @@ urlpatterns = [
     path('productcreate/',createProduct),
     path('createuser/', createDataToDB),
     path('emp/',createEmployee),
+    path('order/',orderPlacing),
     path('bookticket/',BookMyshow),
     path('getBookings/',BookingDetails),
     path('updatescreen/<str:ref_screen>',UpdateScreenByScreen),
@@ -43,5 +44,8 @@ urlpatterns = [
     path('getbooks/', GetBooksDetails),
     path('updatebook/<str:ref_id>', UpdateBookDetails),
     path('deletebook/<str:ref_id>', DeleteBookDetails), 
-    path('methodsonbook/', MethodsOnBookDetails)
+    path('methodsonbook/', MethodsOnBookDetails),
+    path('updateCity/',UpdateUserCityById),
+    path('updateAge/',updateUseragebyId),
+    path('deleteUser/<int:ref_id>',DeleteUserById),
 ]
