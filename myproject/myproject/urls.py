@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from myfirstapp.views import DeleteUserById, updateUseragebyId, UpdateUserCityById, createEmployee, createDataToDB, createProduct, createData, pagination, filterStudentsByCity, filteringData, productInfo, sample1, sample, home, about, contact, services
 
-from mysecondapp.views import MethodsOnBookDetails, DeleteBookDetails, UpdateBookDetails, GetBooksDetails, AddBookDetails, UpdateScreenByScreen, BookingDetails, BookMyshow, orderPlacing
+from mysecondapp.views import MethodsOnBookDetails, DeleteBookDetails, UpdateBookDetails, GetBooksDetails, AddBookDetails, updateOrderStatus, UpdateScreenByScreen, getMoviesByMultipleScreens, getMoviesByScreenname, getMultiplesOrdersByStatus, getOrdersByStatus, getStudentsByDegree, getStudentById, BookingDetails, GetOrders, BookMyshow, orderPlacing
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,7 +38,14 @@ urlpatterns = [
     path('emp/',createEmployee),
     path('order/',orderPlacing),
     path('bookticket/',BookMyshow),
+    path('getOrders/',GetOrders),
     path('getBookings/',BookingDetails),
+    path('getStudent/<int:id>',getStudentById),
+    path('getStudentsByDegree/<str:deg>',getStudentsByDegree),
+    path('orderByStatus/<str:status_param>',getOrdersByStatus),
+    path('orders/<str:status>',getMultiplesOrdersByStatus),
+    path('movieByScreen/<str:screen>',getMoviesByScreenname),
+    path('movieByScreens/<str:first>/<str:second>',getMoviesByMultipleScreens),
     path('updatescreen/<str:ref_screen>',UpdateScreenByScreen),
     path('addbookdetails/', AddBookDetails),
     path('getbooks/', GetBooksDetails),
@@ -48,4 +55,5 @@ urlpatterns = [
     path('updateCity/',UpdateUserCityById),
     path('updateAge/',updateUseragebyId),
     path('deleteUser/<int:ref_id>',DeleteUserById),
+    path('updateStatus/<str:ref_status>',updateOrderStatus),
 ]
