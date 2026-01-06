@@ -191,3 +191,17 @@ def DeleteUserById(request,ref_id):
         return JsonResponse({"status":"failure",":msg":"only DELETE method is allowed"},status=400)
     except Exception as e:
         return JsonResponse({"status":"error","message":"something went wrong"},status=500)
+
+
+# 06-1-2026
+# Middleware is responsible for accepting request and providing response in b/w views and user.
+# once we make a request immediately middleware wiil trigger by default.
+# we will implement middleware using class based.
+# while implementing middleware using class, need to use two default methods which are mandetory.
+
+# 1. __init__() = whenever we start a server, this method will trigger by default.
+# 2. __call__() = whenever we make a api request/call then this method will trigger by default. This Will be the 
+# responsible for taking user request and getting response from the view as per the request.
+
+# 1. global middleware = triggers for every views.
+# 2. 
