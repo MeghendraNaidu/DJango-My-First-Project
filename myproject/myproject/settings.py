@@ -51,6 +51,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'myfirstapp.middlewares.Middleware1',
     'myfirstapp.middlewares.Middleware2',
+    'myfirstapp.middlewares.SSCStatusMiddleware',
+    'myfirstapp.middlewares.MedicallyFitMiddleware',
+    'myfirstapp.middlewares.AgeValidationMiddleware'
 ]
 
 ROOT_URLCONF = 'myproject.urls'

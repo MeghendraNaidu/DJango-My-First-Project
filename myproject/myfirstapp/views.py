@@ -177,6 +177,7 @@ def updateUseragebyId(request):
         return JsonResponse({"status":"failure",":msg":"only put method is allowed"},status=400)
     except Exception as e:
         return JsonResponse({"status":"error","message":"something went wrong"},status=500)
+    
 @csrf_exempt
 def DeleteUserById(request,ref_id):
     try:
@@ -205,3 +206,22 @@ def DeleteUserById(request,ref_id):
 
 # 1. global middleware = triggers for every views.
 # 2. 
+
+# 7-1-2026
+@csrf_exempt
+def job1(request):
+    try:
+        if request.method == "POST":
+            return JsonResponse({"Status" : "Success", "Message" : "Job1 Applies Successfully"})
+        return JsonResponse({"Status" : "Failure", "Message" : "Only POST Method allowed"})
+    except Exception as e:
+        return JsonResponse({"Status" : "Error", "Message" : "Something Went Wrong"})
+    
+@csrf_exempt
+def job2(request):
+    try:
+        if request.method == "POST":
+            return JsonResponse({"Status" : "Success", "Message" : "Job2 Applies Successfully"})
+        return JsonResponse({"Status" : "Failure", "Message" : "Only POST Method allowed"})
+    except Exception as e:
+        return JsonResponse({"Status" : "Error", "Message" : "Something Went Wrong"})
