@@ -55,7 +55,10 @@ MIDDLEWARE = [
     'myfirstapp.middlewares.MedicallyFitMiddleware',
     'myfirstapp.middlewares.AgeValidationMiddleware',
     'myfirstapp.middlewares.IntermediateStatusMiddleware',
-    'myfirstapp.middlewares.EamcetStatusMiddleware'
+    'myfirstapp.middlewares.EamcetStatusMiddleware',
+    'myfirstapp.middlewares.UserNameValidationMiddleware',
+    'myfirstapp.middlewares.UserEmailValidationMiddleware',
+    'myfirstapp.middlewares.UserPasswordValidationMiddleware'
 ]
 
 ROOT_URLCONF = 'myproject.urls'

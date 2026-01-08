@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from myfirstapp.views import Engineering_Seat, job2, job1, DeleteUserById, updateUseragebyId, UpdateUserCityById, createEmployee, createDataToDB, createProduct, createData, pagination, filterStudentsByCity, filteringData, productInfo, sample1, sample, home, about, contact, services
+from myfirstapp.views import UserSignUp, Engineering_Seat, job2, job1, DeleteUserById, updateUseragebyId, UpdateUserCityById, createEmployee, createDataToDB, createProduct, createData, pagination, filterStudentsByCity, filteringData, productInfo, sample1, sample, home, about, contact, services
 
 from mysecondapp.views import MethodsOnBookDetails, DeleteBookDetails, UpdateBookDetails, GetBooksDetails, AddBookDetails, updateOrderStatus, UpdateScreenByScreen, getMoviesByMultipleScreens, getMoviesByScreenname, getMultiplesOrdersByStatus, getOrdersByStatus, getStudentsByDegree, getStudentById, BookingDetails, GetOrders, BookMyshow, orderPlacing
 
@@ -58,5 +58,6 @@ urlpatterns = [
     path('updateStatus/<str:ref_status>',updateOrderStatus),
     path('job1/', job1), 
     path('job2/', job2),
-    path("enginaaringseat/", Engineering_Seat)
+    path("enginaaringseat/", Engineering_Seat),
+    path("usersignup/", UserSignUp)
 ]

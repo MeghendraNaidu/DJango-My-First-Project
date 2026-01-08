@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 import math
 import json
 from django.views.decorators.csrf import csrf_exempt
-from myfirstapp.models import userProfile,Employee
+from myfirstapp.models import userProfile,Employee, SignUp
 from django.db.utils import IntegrityError
 
 
@@ -234,3 +234,25 @@ def Engineering_Seat(request):
         return JsonResponse({"Status" : "Failure", "Message" : "Only POST Method allowed"})
     except Exception as e:
         return JsonResponse({"Status" : "Error", "Message" : "Something Went Wrong"})
+
+@csrf_exempt
+def UserSignUp(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body)
+            if SignUp.objects.filter(User_Name = data["username"]).exists():
+                Message = "User Name Already Existed"
+                Status = "Failed"
+                code = 400
+            elif SignUp.objects.filter(User_Email = data["email"]).exists():
+                Message = "Entered Email Already Existed"
+                Status = "Failed"
+                code = 400
+            elif SignUp.objects.create(User_Name = data["username"], User_Email = data["email"], User_Password = data["password"]):
+                Message = "Data Inserted Successfully"
+                Status = "Success"
+                code = 200
+            return JsonResponse({"Status" : Status, "Message" : Message}, status=code)
+        return JsonResponse({"Status" : "Failure", "Message" : "Only POST Method is Allowed"}, status=400)
+    except Exception as e:
+        return JsonResponse({"Status" : "Error", "Message" : "Somthing Went Wrong Please Check"}, status=500)
