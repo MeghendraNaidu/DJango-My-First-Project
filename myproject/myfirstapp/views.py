@@ -225,3 +225,12 @@ def job2(request):
         return JsonResponse({"Status" : "Failure", "Message" : "Only POST Method allowed"})
     except Exception as e:
         return JsonResponse({"Status" : "Error", "Message" : "Something Went Wrong"})
+
+@csrf_exempt
+def Engineering_Seat(request):
+    try:
+        if request.method == "POST":
+            return JsonResponse({"Status" : "Success", "Message" : "Engineering Seat Conformed Applies Successfully"})
+        return JsonResponse({"Status" : "Failure", "Message" : "Only POST Method allowed"})
+    except Exception as e:
+        return JsonResponse({"Status" : "Error", "Message" : "Something Went Wrong"})

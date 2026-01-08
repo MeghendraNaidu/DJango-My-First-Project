@@ -40,9 +40,9 @@ class SSCStatusMiddleware:
             ssc_status = incoming_data.get("ssc_status")
             if not ssc_status:    
                 return JsonResponse({"Status" : "Failure", "Message" : "U Need to Qualify the SSC"})
-        return self.get_response(request)
-            # response = self.get_response(request)
-            # return response
+        # return self.get_response(request)
+        response = self.get_response(request)
+        return response
         
 class MedicallyFitMiddleware:
     def __init__(self, get_response):
@@ -54,9 +54,9 @@ class MedicallyFitMiddleware:
             medical_fit = incoming_data.get("medical_fit")
             if not medical_fit:    
                 return JsonResponse({"Status" : "Failure", "Message" : "U Should Medically Fit To Apply This Job"})
-        return self.get_response(request)
-            # response = self.get_response(request)
-            # return response
+        # return self.get_response(request)
+        response = self.get_response(request)
+        return response
         
 class AgeValidationMiddleware:
     def __init__(self, get_response):
@@ -66,8 +66,36 @@ class AgeValidationMiddleware:
         if request.path in ["/job1/", "/job2/"] and request.method == "POST":
             incoming_data = json.loads(request.body)
             age = incoming_data.get("age")
-            if age is None or age <= 21:    
+            if age <= 21:    
                 return JsonResponse({"Status" : "Failure", "Message" : "U Should Have Atleast More Then 21 Years To Apply This Job"})
-        return self.get_response(request)
-            # response = self.get_response(request)
-            # return response
+        # return self.get_response(request)
+        response = self.get_response(request)
+        return response
+    
+class IntermediateStatusMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+        
+    def __call__(self, request):
+        if request.path in ["/enginaaringseat/"] and request.method == "POST":
+            incoming_data = json.loads(request.body)
+            inter_status = incoming_data.get("inter_status")
+            if inter_status <= 800:    
+                return JsonResponse({"Status" : "Failure", "Message" : "U Need to Qualify the Intermediate To Get Engineering Seat"})
+        # return self.get_response(request)
+        response = self.get_response(request)
+        return response
+    
+class EamcetStatusMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+        
+    def __call__(self, request):
+        if request.path in ["/enginaaringseat/"] and request.method == "POST":
+            incoming_data = json.loads(request.body)
+            eamcet_status = incoming_data.get("eamcet_status")
+            if eamcet_status <= 40:    
+                return JsonResponse({"Status" : "Failure", "Message" : "U Need to Qualify the Eamcet To Get Engineering Seat"})
+        # return self.get_response(request)
+        response = self.get_response(request)
+        return response
