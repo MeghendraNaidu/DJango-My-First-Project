@@ -3,8 +3,11 @@ from django.http import HttpResponse, JsonResponse
 import math
 import json
 from django.views.decorators.csrf import csrf_exempt
-from myfirstapp.models import userProfile,Employee, SignUp
+from myfirstapp.models import userProfile,Employee, SignUp, User
 from django.db.utils import IntegrityError
+from django.contrib.auth.hashers import make_password, check_password
+import jwt
+from datetime import datetime, timedelta
 
 
 # Create your views here.
@@ -256,3 +259,20 @@ def UserSignUp(request):
         return JsonResponse({"Status" : "Failure", "Message" : "Only POST Method is Allowed"}, status=400)
     except Exception as e:
         return JsonResponse({"Status" : "Error", "Message" : "Somthing Went Wrong Please Check"}, status=500)
+    
+# 20-1-2026
+@csrf_exempt
+def signup(request):
+    data = json.loads(request.body)
+    
+    hashed_password=make_password(data["password"])
+    user = User.objects.create(User_Name=data["username"], User_Email=data["email"], User_Password=hashed_password)
+
+    return JsonResponse({"status": "success", "msg": "User registered successfully"}, status=201)
+
+@csrf_exempt
+def login(request):
+    user_info=json.loads(request.body)
+    user=user_info.get("username")
+
+    return JsonResponse({"status": "success", "msg": "Login successful", "greetings":f"welcome {user}"})

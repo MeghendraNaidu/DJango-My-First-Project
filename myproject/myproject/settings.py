@@ -58,7 +58,8 @@ MIDDLEWARE = [
     'myfirstapp.middlewares.EamcetStatusMiddleware',
     'myfirstapp.middlewares.UserNameValidationMiddleware',
     'myfirstapp.middlewares.UserEmailValidationMiddleware',
-    'myfirstapp.middlewares.UserPasswordValidationMiddleware'
+    'myfirstapp.middlewares.UserPasswordValidationMiddleware',
+    'myfirstapp.middlewares.authMiddleware',
 ]
 
 ROOT_URLCONF = 'myproject.urls'

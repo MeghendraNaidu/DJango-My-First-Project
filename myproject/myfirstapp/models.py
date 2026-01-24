@@ -14,8 +14,11 @@ class Employee(models.Model):
 class SignUp(models.Model):
     User_Name = models.CharField(max_length=150, unique=True)
     User_Email = models.EmailField(unique=True)
-    User_Password = models.CharField(max_length=12, unique=True)
+    User_Password = models.CharField(max_length=100, unique=True)
     
-
+class User(models.Model):
+    User_Name = models.CharField(max_length=150, unique=True)
+    User_Email = models.EmailField(unique=True)
+    User_Password = models.CharField(max_length=100, unique=True)
 
 #create product model with fields produ_name,price and quantity,totalprice
