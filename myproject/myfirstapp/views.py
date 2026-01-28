@@ -8,6 +8,7 @@ from django.db.utils import IntegrityError
 from django.contrib.auth.hashers import make_password, check_password
 import jwt
 from datetime import datetime, timedelta
+from django.conf import settings
 
 
 # Create your views here.
@@ -274,5 +275,9 @@ def signup(request):
 def login(request):
     user_info=json.loads(request.body)
     user=user_info.get("username")
+    
+    payload = {"username" : user, "iat" : datetime.utcnow(), "exp" : datetime.utcnow() + timedelta(seconds = settings.JWT_EXP_TIME)}
+    
+    Token = jwt.encode(payload, settings.JWT_SECRET_KEY, algorithm = settings.JWT_ALGORITHM)
 
-    return JsonResponse({"status": "success", "msg": "Login successful", "greetings":f"welcome {user}"})
+    return JsonResponse({"status": "success", "msg": "Login successful", "Token" : Token, "greetings":f"welcome {user}"})

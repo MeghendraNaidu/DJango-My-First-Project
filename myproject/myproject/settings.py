@@ -118,6 +118,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+JWT_SECRET_KEY = "myfirstdjango-project"
+JWT_ALGORITHM = 'HS256'
+JWT_EXP_TIME = 60 * 60 # it means 1 hour
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
