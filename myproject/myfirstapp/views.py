@@ -275,9 +275,46 @@ def signup(request):
 def login(request):
     user_info=json.loads(request.body)
     user=user_info.get("username")
+    user_existing_info=list(User.objects.filter(User_Name=user).values())
+    print(user_existing_info)
     
-    payload = {"username" : user, "iat" : datetime.utcnow(), "exp" : datetime.utcnow() + timedelta(seconds = settings.JWT_EXP_TIME)}
+    payload = {"username" : user, "iat" : datetime.utcnow(), 
+               "role":user_existing_info[0].get("role"), "exp" : datetime.utcnow() + timedelta(seconds = settings.JWT_EXP_TIME)}
     
     Token = jwt.encode(payload, settings.JWT_SECRET_KEY, algorithm = settings.JWT_ALGORITHM)
 
     return JsonResponse({"status": "success", "msg": "Login successful", "Token" : Token, "greetings":f"welcome {user}"})
+
+@csrf_exempt
+def protected_api(request):
+    try:
+        if request.method=="POST":
+            auth_header = request.headers.get("Authorization")
+            token=auth_header.split(" ")[1]
+            print(token[1]) #readig token from input
+            if not auth_header:
+                return JsonResponse(
+                    {"msg": "Authorization header missing"},
+                    status=401
+                )
+            try:
+                # print(auth_header)
+                decoded_payload = jwt.decode(
+                                    token,
+                                    settings.JWT_SECRET_KEY,
+                                    algorithms=[settings.JWT_ALGORITHM]
+                                    )
+                print(decoded_payload)
+                if decoded_payload.get("role")=="admin":
+                    return JsonResponse({"msg":"u have access for this api"})
+                else:
+                    return JsonResponse({"msg":"u have not access for this api"},status=401) 
+                return JsonResponse({"msg":"successfully token recieved"})
+            except Exception as e:
+                return JsonResponse({"msg":"something went wrong","error":e})
+        return JsonResponse({"msg":"done"})
+    except:
+        return JsonResponse({"msg":"only post method allowed"})
+
+
+

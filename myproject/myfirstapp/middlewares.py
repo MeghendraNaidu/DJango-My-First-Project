@@ -177,7 +177,8 @@ class authMiddleware:
                 username = data.get("username")
                 email = data.get("email")
                 password = data.get("password")
-                if not all([username, email, password]):
+                role=data.get("role")
+                if not all([username, email, password, role]):
                     return JsonResponse({"error": "All fields are required"}, status=400)
 
                 if not self.username_pattern.match(username):

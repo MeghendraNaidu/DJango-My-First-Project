@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from myfirstapp.views import login, signup, UserSignUp, Engineering_Seat, job2, job1, DeleteUserById, updateUseragebyId, UpdateUserCityById, createEmployee, createDataToDB, createProduct, createData, pagination, filterStudentsByCity, filteringData, productInfo, sample1, sample, home, about, contact, services
+from myfirstapp.views import protected_api, login, signup, UserSignUp, Engineering_Seat, job2, job1, DeleteUserById, updateUseragebyId, UpdateUserCityById, createEmployee, createDataToDB, createProduct, createData, pagination, filterStudentsByCity, filteringData, productInfo, sample1, sample, home, about, contact, services
 
 from mysecondapp.views import MethodsOnBookDetails, DeleteBookDetails, UpdateBookDetails, GetBooksDetails, AddBookDetails, updateOrderStatus, UpdateScreenByScreen, getMoviesByMultipleScreens, getMoviesByScreenname, getMultiplesOrdersByStatus, getOrdersByStatus, getStudentsByDegree, getStudentById, BookingDetails, GetOrders, BookMyshow, orderPlacing
 
@@ -61,5 +61,6 @@ urlpatterns = [
     path("enginaaringseat/", Engineering_Seat),
     path("usersignup/", UserSignUp),
      path("signup/",signup),
-    path("login/",login)
+    path("login/",login),
+    path('protect/',protected_api)
 ]

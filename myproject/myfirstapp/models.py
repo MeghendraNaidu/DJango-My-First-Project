@@ -19,6 +19,7 @@ class SignUp(models.Model):
 class User(models.Model):
     User_Name = models.CharField(max_length=150, unique=True)
     User_Email = models.EmailField(unique=True)
+    role = models.CharField(max_length=255, default="user")
     User_Password = models.CharField(max_length=100, unique=True)
 
 #create product model with fields produ_name,price and quantity,totalprice
