@@ -60,7 +60,7 @@ urlpatterns = [
     path('job2/', job2),
     path("enginaaringseat/", Engineering_Seat),
     path("usersignup/", UserSignUp),
-     path("signup/",signup),
+    path("signup/",signup),
     path("login/",login),
-    path('protect/',protected_api)
+    path('protect/',protected_api),
 ]

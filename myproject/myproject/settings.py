@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +22,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-zzfg4t18@e#bzs4b$rt-7nfor@&eg_f*ri52x7oil9ylpvw4rq'
+SECRET_KEY = os.environ.get('django-insecure-zzfg4t18@e#bzs4b$rt-7nfor@&eg_f*ri52x7oil9ylpvw4rq')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['djangomyfirstproject.onrender.com', '127.0.0.1']
+# ALLOWED_HOSTS = ['djangomyfirstproject.onrender.com', '127.0.0.1']
+ALLOWED_HOSTS = ["*"]  # later restrict
 
 
 # Application definition
@@ -85,18 +89,22 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'mysql.connector.django',
+#         'NAME': 'DJango_Practice',
+#         'USER': 'root',
+#         'PASSWORD':'1234',
+#         'HOST':'127.0.0.1',
+#         'PORT':'3306',
+#         'OPTION':{
+#             "autocommit" : True,
+#         }
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'mysql.connector.django',
-        'NAME': 'DJango_Practice',
-        'USER': 'root',
-        'PASSWORD':'1234',
-        'HOST':'127.0.0.1',
-        'PORT':'3306',
-        'OPTION':{
-            "autocommit" : True,
-        }
-    }
+    "default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))
 }
 
 
@@ -139,3 +147,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
