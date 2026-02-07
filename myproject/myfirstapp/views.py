@@ -9,6 +9,14 @@ from django.contrib.auth.hashers import make_password, check_password
 import jwt
 from datetime import datetime, timedelta
 from django.conf import settings
+from dotenv import load_dotenv
+import os
+
+from myproject.settings import BASE_DIR
+
+
+load_dotenv(BASE_DIR / ".env")
+
 
 
 # Create your views here.
@@ -279,9 +287,9 @@ def login(request):
     print(user_existing_info)
     
     payload = {"username" : user, "iat" : datetime.utcnow(), 
-               "role":user_existing_info[0].get("role"), "exp" : datetime.utcnow() + timedelta(seconds = settings.JWT_EXP_TIME)}
+               "role":user_existing_info[0].get("role"), "exp" : datetime.utcnow() + timedelta(seconds = os.getenv("JWT_EXP_TIME"))}
     
-    Token = jwt.encode(payload, settings.JWT_SECRET_KEY, algorithm = settings.JWT_ALGORITHM)
+    Token = jwt.encode(payload, os.getenv("JWT_SECRET_KEY"), algorithm = os.getenv("JWT_ALGORITHM"))
 
     return JsonResponse({"status": "success", "msg": "Login successful", "Token" : Token, "greetings":f"welcome {user}"})
 
@@ -301,8 +309,8 @@ def protected_api(request):
                 # print(auth_header)
                 decoded_payload = jwt.decode(
                                     token,
-                                    settings.JWT_SECRET_KEY,
-                                    algorithms=[settings.JWT_ALGORITHM]
+                                    os.getenv("JWT_SECRET_KEY"),
+                                    algorithms = os.getenv("JWT_ALGORITHM")
                                     )
                 print(decoded_payload)
                 if decoded_payload.get("role")=="admin":

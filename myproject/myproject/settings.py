@@ -11,9 +11,13 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / ".env")
 
 
 # Quick-start development settings - unsuitable for production
@@ -88,11 +92,11 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mysql.connector.django',
-        'NAME': 'DJango_Practice',
-        'USER': 'root',
-        'PASSWORD':'1234',
-        'HOST':'127.0.0.1',
-        'PORT':'3306',
+        'NAME': os.getenv("DB_NAME"),
+        'USER': os.getenv("DB_USER"),
+        'PASSWORD': os.getenv("DB_PASSWORD"),
+        'HOST': os.getenv("DB_HOST"),
+        'PORT': os.getenv("DB_PORT"),
         'OPTION':{
             "autocommit" : True,
         }
@@ -118,9 +122,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-JWT_SECRET_KEY = "myfirstdjango-project"
-JWT_ALGORITHM = 'HS256'
-JWT_EXP_TIME = 60 * 60 # it means 1 hour
+# JWT_SECRET_KEY = "myfirstdjango-project"
+# JWT_ALGORITHM = 'HS256'
+# JWT_EXP_TIME = 60 * 60 # it means 1 hour
 
 
 # Internationalization
